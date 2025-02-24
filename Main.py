@@ -60,7 +60,7 @@ def save_all_data(data):
 all_user_data = load_all_data()
 
 # Streamlit interface
-st.title("Gold 	:sports_medal: and Silver 🥈 Profit/Loss Calculator")
+st.title("Gold :sports_medal: and Silver 🥈 Profit/Loss Calculator")
 
 # User selection or creation
 st.header("User Management")
@@ -157,7 +157,7 @@ if pseudo:
             # Display results in a visually appealing way
             st.header("Profit/Loss Results")
             
-            # Gold results 🪙
+            # Gold results :sports_medal:
             st.subheader("Gold :sports_medal:")
             st.metric(label="Current Value (€)", value=f"{gold_current_value:.2f}")
             st.metric(label="Purchase Value (€)", value=f"{gold_purchase_value:.2f}")
@@ -191,4 +191,3 @@ if pseudo:
                 # Breakdown of losses by metal
                 st.write(f":sports_medal: Gold Loss: €{total_lost_gold:.2f}")
                 st.write(f"🥈 Silver Loss: €{total_lost_silver:.2f}")
-                
