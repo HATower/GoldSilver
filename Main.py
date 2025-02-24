@@ -68,7 +68,6 @@ pseudo = st.text_input("Enter your unique pseudo (or type the first few letters 
 
 if pseudo:
     # Find matching pseudos
-    matching_pseudos = [p for p in all_user_data.keys() if p.startswith(pseudo)]
 
     if matching_pseudos:
         selected_pseudo = st.selectbox("Select your pseudo:", matching_pseudos)
