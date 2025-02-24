@@ -67,12 +67,7 @@ st.header("User Management")
 pseudo = st.text_input("Enter your unique pseudo (or type the first few letters to search):")
 
 if pseudo:
-    # Find matching pseudos
-
-    if matching_pseudos:
-        selected_pseudo = st.selectbox("Select your pseudo:", matching_pseudos)
-    else:
-        selected_pseudo = pseudo
+    selected_pseudo = pseudo
 
     # Load user data or initialize new user data
     if selected_pseudo in all_user_data:
