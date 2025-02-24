@@ -106,28 +106,66 @@ if pseudo:
 
         # User inputs for quantities and purchase prices (pre-filled with saved data)
         st.header("Your Portfolio")
-        gold_quantity = st.number_input(
-            "Enter the quantity of gold you own (in grams):", 
-            min_value=0.0, 
-            value=user_data.get("gold_quantity", 0.0)
-        )
-        silver_quantity = st.number_input(
-            "Enter the quantity of silver you own (in grams):", 
-            min_value=0.0, 
-            value=user_data.get("silver_quantity", 0.0)
-        )
 
-        st.header("Purchase Prices")
-        gold_purchase_price = st.number_input(
-            "Enter the price you bought gold for (per gram, in EUR):", 
-            min_value=0.0, 
-            value=user_data.get("gold_price", 0.0)
-        )
-        silver_purchase_price = st.number_input(
-            "Enter the price you bought silver for (per gram, in EUR):", 
-            min_value=0.0, 
-            value=user_data.get("silver_price", 0.0)
-        )
+        # Gold Section (only visible if user owns gold or wants to input it)
+        show_gold_section = user_data.get("gold_quantity", 0) > 0 or st.checkbox("Show Gold Section", value=False)
+        
+        if show_gold_section:
+            with st.expander("Gold :sports_medal:"):
+                gold_quantity = st.number_input(
+                    "Enter the quantity of gold you own (in grams):", 
+                    min_value=0.0, 
+                    value=user_data.get("gold_quantity", 0.0)
+                )
+                gold_purchase_price = st.number_input(
+                    "Enter the price you bought gold for (per gram, in EUR):", 
+                    min_value=0.0, 
+                    value=user_data.get("gold_price", 0.0)
+                )
+                
+                # Gold calculations
+                gold_current_value = gold_quantity * gold_price_per_gram
+                gold_purchase_value = gold_quantity * gold_purchase_price
+                gold_profit_loss = gold_current_value - gold_purchase_value
+                
+                # Display Gold results
+                st.metric(label="Current Value (€)", value=f"{gold_current_value:.2f}")
+                st.metric(label="Purchase Value (€)", value=f"{gold_purchase_value:.2f}")
+                
+                if gold_profit_loss > 0:
+                    st.success(f"Profit: €{gold_profit_loss:.2f}")
+                elif gold_profit_loss < 0:
+                    st.error(f"Loss: €{abs(gold_profit_loss):.2f}")
+
+        # Silver Section (only visible if user owns silver or wants to input it)
+        show_silver_section = user_data.get("silver_quantity", 0) > 0 or st.checkbox("Show Silver Section", value=False)
+
+        if show_silver_section:
+            with st.expander("Silver 🥈"):
+                silver_quantity = st.number_input(
+                    "Enter the quantity of silver you own (in grams):", 
+                    min_value=0.0, 
+                    value=user_data.get("silver_quantity", 0.0)
+                )
+                silver_purchase_price = st.number_input(
+                    "Enter the price you bought silver for (per gram, in EUR):", 
+                    min_value=0.0, 
+                    value=user_data.get("silver_price", 0.0)
+                )
+                
+                # Silver calculations
+                silver_current_value = silver_quantity * silver_price_per_gram
+                silver_purchase_value = silver_quantity * silver_purchase_price
+                silver_profit_loss = silver_current_value - silver_purchase_value
+                
+                # Display Silver results
+                st.metric(label="Current Value (€)", value=f"{silver_current_value:.2f}")
+                st.metric(label="Purchase Value (€)", value=f"{silver_purchase_value:.2f}")
+                
+                if silver_profit_loss > 0:
+                    st.success(f"Profit: €{silver_profit_loss:.2f}")
+                elif silver_profit_loss < 0:
+                    st.error(f"Loss: €{abs(silver_profit_loss):.2f}")
 
         # Save button to persist data under the user's pseudo
         if st.button("Save Data"):
@@ -139,55 +177,3 @@ if pseudo:
             }
             save_all_data(all_user_data)
             st.success(f"Your data has been saved under the pseudo '{selected_pseudo}'!")
-
-        # Calculate profit or loss
-        if st.button("Calculate Profit/Loss"):
-            # Gold calculations
-            gold_current_value = gold_quantity * gold_price_per_gram
-            gold_purchase_value = gold_quantity * gold_purchase_price
-            gold_profit_loss = gold_current_value - gold_purchase_value
-
-            # Silver calculations
-            silver_current_value = silver_quantity * silver_price_per_gram
-            silver_purchase_value = silver_quantity * silver_purchase_price
-            silver_profit_loss = silver_current_value - silver_purchase_value
-
-            total_profit_loss = gold_profit_loss + silver_profit_loss
-
-            # Display results in a visually appealing way
-            st.header("Profit/Loss Results")
-            
-            # Gold results :sports_medal:
-            st.subheader("Gold :sports_medal:")
-            st.metric(label="Current Value (€)", value=f"{gold_current_value:.2f}")
-            st.metric(label="Purchase Value (€)", value=f"{gold_purchase_value:.2f}")
-            
-            if gold_profit_loss > 0:
-                st.success(f"Profit: €{gold_profit_loss:.2f}")
-            elif gold_profit_loss < 0:
-                st.error(f"Loss: €{abs(gold_profit_loss):.2f}")
-            
-            # Silver results 🥈
-            st.subheader("Silver 🥈")
-            st.metric(label="Current Value (€)", value=f"{silver_current_value:.2f}")
-            st.metric(label="Purchase Value (€)", value=f"{silver_purchase_value:.2f}")
-            
-            if silver_profit_loss > 0:
-                st.success(f"Profit: €{silver_profit_loss:.2f}")
-            elif silver_profit_loss < 0:
-                st.error(f"Loss: €{abs(silver_profit_loss):.2f}")
-
-            # Total profit/loss summary in a visible way
-            st.header("Total Profit/Loss")
-            
-            if total_profit_loss > 0:
-                st.success(f"🎉 Total Profit: €{total_profit_loss:.2f}")
-            elif total_profit_loss < 0:
-                total_lost_gold = abs(min(gold_profit_loss, 0))
-                total_lost_silver = abs(min(silver_profit_loss, 0))
-                
-                st.error(f"💔 Total Loss: €{abs(total_profit_loss):.2f}")
-                
-                # Breakdown of losses by metal
-                st.write(f":sports_medal: Gold Loss: €{total_lost_gold:.2f}")
-                st.write(f"🥈 Silver Loss: €{total_lost_silver:.2f}")
