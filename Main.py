@@ -44,6 +44,7 @@ def get_prices():
                 "last_fetch_time": last_fetch_time.isoformat()
             }, file)
         return gold_price_per_gram, silver_price_per_gram, last_fetch_time
+gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
 def is_time_to_fetch():
     current_time = datetime.now().time()
     fetch_times = [
@@ -98,7 +99,7 @@ else:
     st.info("You are calculating anonymously. Your data will not be saved.")
 
 # Fetch current prices (once a day or on-demand)
-gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
+
 
 if gold_price_per_gram is not None and silver_price_per_gram is not None:
     # Display current prices and last fetch time
