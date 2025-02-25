@@ -127,8 +127,9 @@ if gold_price_per_gram is not None and silver_price_per_gram is not None:
             # Display Gold results
             st.metric(label="Current Value (€)", value=f"{gold_current_value:.2f}")
             st.metric(label="Purchase Value (€)", value=f"{gold_purchase_value:.2f}")
-            gold_profit_loss_pourcent = gold_profit_loss/gold_purchase_value
-            st.metric("Gold",gold_current_value,gold_profit_loss_pourcent)
+            if gold_purchase_value != 0:
+                gold_profit_loss_pourcent = gold_profit_loss/gold_purchase_value
+                st.metric("Gold",gold_current_value,gold_profit_loss_pourcent&"%")
             if gold_profit_loss > 0:
                 st.success(f"Profit: €{gold_profit_loss:.2f}")
             elif gold_profit_loss < 0:
@@ -156,8 +157,9 @@ if gold_price_per_gram is not None and silver_price_per_gram is not None:
             # Display Silver results
             st.metric(label="Current Value (€)", value=f"{silver_current_value:.2f}")
             st.metric(label="Purchase Value (€)", value=f"{silver_purchase_value:.2f}")
-            silver_profit_loss_pourcent = silver_profit_loss/silver_purchase_value
-            st.metric("Silver",silver_current_value,silver_profit_loss_pourcent+"%")
+            if silver_purchase_value!=0:
+                silver_profit_loss_pourcent = silver_profit_loss/silver_purchase_value
+                st.metric("Silver",silver_current_value,silver_profit_loss_pourcent&"%")
             if silver_profit_loss > 0:
                 st.success(f"Profit: €{silver_profit_loss:.2f}")
                 
