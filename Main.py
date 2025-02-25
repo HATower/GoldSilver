@@ -10,7 +10,7 @@ PRICES_FILE = "prices.json"
 fetch_times = [
         datetime.strptime("07:30", "%H:%M").time(),
         datetime.strptime("11:00", "%H:%M").time(),
-        datetime.strptime("14:46", "%H:%M").time(),
+        datetime.strptime("14:51", "%H:%M").time(),
         datetime.strptime("16:00", "%H:%M").time(),
     ]
 # Function to fetch data from the API
