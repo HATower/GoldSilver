@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 DATA_FILE = "users_data.json"
 PRICES_FILE = "prices.json"
-etch_times = [
+fetch_times = [
         datetime.strptime("07:30", "%H:%M").time(),
         datetime.strptime("11:00", "%H:%M").time(),
         datetime.strptime("14:44", "%H:%M").time(),
@@ -53,6 +53,7 @@ gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
 def is_time_to_fetch():
     current_time = datetime.now().time()
     print('TEST time')
+
     return current_time in fetch_times
 if is_time_to_fetch() in fetch_times or datetime.now() - last_fetch_time > timedelta(days=1):
                 gold_price_per_gram, silver_price_per_gram = fetch_data_from_api()
