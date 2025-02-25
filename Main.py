@@ -42,7 +42,7 @@ def get_prices():
                 "silver_price_per_gram": silver_price_per_gram,
                 "last_fetch_time": datetime.now().isoformat()
             }, file)
-    return gold_price_per_gram, silver_price_per_gram
+    return gold_price_per_gram, silver_price_per_gram,datetime.now()
 
 # Function to load all user data
 def load_all_data():
