@@ -13,7 +13,7 @@ if st.button('refresh'):
 fetch_times = [
         datetime.strptime("07:30", "%H:%M").time(),
         datetime.strptime("11:00", "%H:%M").time(),
-        datetime.strptime("14:59", "%H:%M").time(),
+        datetime.strptime("15:00", "%H:%M").time(),
         datetime.strptime("16:00", "%H:%M").time(),
     ]
 # Function to fetch data from the API
