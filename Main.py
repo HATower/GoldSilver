@@ -186,3 +186,7 @@ if pseudo:
             }
             save_all_data(all_user_data)
             st.success(f"Your data has been saved under the pseudo '{selected_pseudo}'!")
+else:
+    # Anonymous calculation mode: Initialize empty user data for temporary use
+    user_data = {"gold_quantity": 0.0, "silver_quantity": 0.0, "gold_price": 0.0, "silver_price": 0.0}
+    st.info("You are calculating anonymously. Your data will not be saved.")
