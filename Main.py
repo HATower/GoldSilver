@@ -52,7 +52,7 @@ def get_prices():
 gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
 def is_time_to_fetch():
     current_time = datetime.now().time()
-    st.write('TESTHours'&current_time)
+    st.write('TESTHours'&str(current_time))
 
     return current_time in fetch_times
 if is_time_to_fetch() in fetch_times or datetime.now() - last_fetch_time > timedelta(days=1):
