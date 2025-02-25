@@ -7,6 +7,9 @@ from datetime import datetime, timedelta
 
 DATA_FILE = "users_data.json"
 PRICES_FILE = "prices.json"
+if st.button('refresh'):
+    True
+
 fetch_times = [
         datetime.strptime("07:30", "%H:%M").time(),
         datetime.strptime("11:00", "%H:%M").time(),
