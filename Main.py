@@ -31,19 +31,18 @@ def get_prices():
             price_data = json.load(file)
             last_fetch_time = datetime.fromisoformat(price_data["last_fetch_time"])
             if datetime.now() - last_fetch_time < timedelta(days=1):
-                return price_data["gold_price_per_gram"], price_data["silver_price_per_gram"], last_fetch_time
+                return price_data["gold_price_per_gram"], price_data["silver_price_per_gram"], 
     
     # Fetch new prices if not fetched within the last day
     gold_price_per_gram, silver_price_per_gram = fetch_data_from_api()
     if gold_price_per_gram is not None and silver_price_per_gram is not None:
-        last_fetch_time = datetime.now()
         with open(PRICES_FILE, "w") as file:
             json.dump({
                 "gold_price_per_gram": gold_price_per_gram,
                 "silver_price_per_gram": silver_price_per_gram,
-                "last_fetch_time": last_fetch_time.isoformat()
+                "last_fetch_time": datetime.now().isoformat()
             }, file)
-        return gold_price_per_gram, silver_price_per_gram, last_fetch_time
+    return gold_price_per_gram, silver_price_per_gram, datetime.now()
 
 # Function to load all user data
 def load_all_data():
@@ -89,10 +88,10 @@ else:
     st.info("You are calculating anonymously. Your data will not be saved.")
 
 # Fetch current prices (once a day or on-demand)
-gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
+gold_price_per_gram, silver_price_per_gram = get_prices()
 
 if gold_price_per_gram is not None and silver_price_per_gram is not None:
-    # Display current prices and last fetch time
+    # Display current prices
     st.header("Current Prices")
     st.write(f"Last fetched at: {last_fetch_time.strftime('%Y-%m-%d %H:%M:%S')}")
     st.write(f"Gold Price :sports_medal: €{gold_price_per_gram:.2f} per gram")
@@ -137,4 +136,43 @@ if gold_price_per_gram is not None and silver_price_per_gram is not None:
         }
         save_all_data(all_user_data)
         st.success(f"Your data has been saved under the pseudo '{selected_pseudo}'!")
+
+    # Calculate profit or loss
+    if st.button("Calculate Profit/Loss"):
+        # Gold calculations
+        gold_current_value = gold_quantity * gold_price_per_gram
+        gold_purchase_value = gold_quantity * gold_purchase_price
+        gold_profit_loss = gold_current_value - gold_purchase_value
+
+        # Silver calculations
+        silver_current_value = silver_quantity * silver_price_per_gram
+        silver_purchase_value = silver_quantity * silver_purchase_price
+        silver_profit_loss = silver_current_value - silver_purchase_value
+
+        total_profit_loss = gold_profit_loss + silver_profit_loss
+
+        # Display results in a visually appealing way
+        st.header("Profit/Loss Results")
+        
+        # Gold results 🪙
+        if gold_quantity > 0:
+            st.subheader("Gold :sports_medal:")
+            st.metric(label="Current Value (€)", value=f"{gold_current_value:.2f}")
+            st.metric(label="Purchase Value (€)", value=f"{gold_purchase_value:.2f}")
+            
+            if gold_profit_loss > 0:
+                st.success(f"Profit: €{gold_profit_loss:.2f}")
+            elif gold_profit_loss < 0:
+                st.error(f"Loss: €{abs(gold_profit_loss):.2f}")
+        
+        # Silver results 🥈
+        if silver_quantity > 0:
+            st.subheader("Silver 🥈")
+            st.metric(label="Current Value (€)", value=f"{silver_current_value:.2f}")
+            st.metric(label="Purchase Value (€)", value=f"{silver_purchase_value:.2f}")
+            
+            if silver_profit_loss > 0:
+                st.success(f"Profit: €{silver_profit_loss:.2f}")
+            elif silver_profit_loss < 0:
+                st.error(f"Loss: €{abs(silver_profit_loss):.2f}")
 
