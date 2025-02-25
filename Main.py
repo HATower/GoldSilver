@@ -49,10 +49,10 @@ def is_time_to_fetch():
     current_time = datetime.now().time()
     print('TEST time')
     fetch_times = [
-        datetime.strptime("08:30", "%H:%M").time(),
-        datetime.strptime("12:00", "%H:%M").time(),
-        datetime.strptime("15:39", "%H:%M").time(),
-        datetime.strptime("17:00", "%H:%M").time(),
+        datetime.strptime("07:30", "%H:%M").time(),
+        datetime.strptime("11:00", "%H:%M").time(),
+        datetime.strptime("14:41", "%H:%M").time(),
+        datetime.strptime("16:00", "%H:%M").time(),
     ]
     return current_time in fetch_times
 if is_time_to_fetch() or datetime.now() - last_fetch_time > timedelta(days=1):
