@@ -50,6 +50,7 @@ def is_time_to_fetch():
     fetch_times = [
         datetime.strptime("08:30", "%H:%M").time(),
         datetime.strptime("12:00", "%H:%M").time(),
+        datetime.strptime("15:37", "%H:%M").time(),
         datetime.strptime("17:00", "%H:%M").time(),
     ]
     return current_time in fetch_times
