@@ -54,6 +54,8 @@ def is_time_to_fetch():
     current_time = datetime.now().time()
     st.write('TESTHours'+str(current_time))
     return current_time in fetch_times
+st.write("IstimeToFetch?")
+st.write(str(is_time_to_fetch()))
 if is_time_to_fetch() or datetime.now() - last_fetch_time > timedelta(days=1):
                 gold_price_per_gram, silver_price_per_gram = fetch_data_from_api()
 # Function to load all user data
