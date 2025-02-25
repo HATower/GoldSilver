@@ -44,7 +44,16 @@ def get_prices():
                 "last_fetch_time": last_fetch_time.isoformat()
             }, file)
         return gold_price_per_gram, silver_price_per_gram, last_fetch_time
-
+def is_time_to_fetch():
+    current_time = datetime.now().time()
+    fetch_times = [
+        datetime.strptime("08:30", "%H:%M").time(),
+        datetime.strptime("12:00", "%H:%M").time(),
+        datetime.strptime("17:00", "%H:%M").time(),
+    ]
+    return current_time in fetch_times
+if is_time_to_fetch() or datetime.now() - last_fetch_time > timedelta(days=1):
+                gold_price_per_gram, silver_price_per_gram = fetch_data_from_api()
 # Function to load all user data
 def load_all_data():
     if os.path.exists(DATA_FILE):
