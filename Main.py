@@ -13,7 +13,7 @@ if st.button('refresh'):
 fetch_times = [
         "07:30",
         "11:00",
-        "15:04",
+        "15:07",
         "16:00",
     ]
 # Function to fetch data from the API
@@ -61,7 +61,7 @@ def is_time_to_fetch():
 st.write("IstimeToFetch?")
 st.write(str(is_time_to_fetch()))
 if is_time_to_fetch() or datetime.now() - last_fetch_time > timedelta(days=1):
-                gold_price_per_gram, silver_price_per_gram = fetch_data_from_api()
+                gold_price_per_gram, silver_price_per_gram, last_fetch_time = get_prices()
 # Function to load all user data
 def load_all_data():
     if os.path.exists(DATA_FILE):
