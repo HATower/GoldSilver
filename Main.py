@@ -93,6 +93,7 @@ gold_price_per_gram, silver_price_per_gram = get_prices()
 if gold_price_per_gram is not None and silver_price_per_gram is not None:
     # Display current prices
     st.header("Current Prices")
+    st.write(f"Last fetched at: {last_fetch_time.strftime('%Y-%m-%d %H:%M:%S')}")
     st.write(f"Gold Price :sports_medal: €{gold_price_per_gram:.2f} per gram")
     st.write(f"Silver Price 🥈: €{silver_price_per_gram:.2f} per gram")
 
